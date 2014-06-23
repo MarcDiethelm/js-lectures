@@ -1,0 +1,8 @@
+# syntax: http://git-scm.com/docs/gitignore
+
+# system
+.idea/
+.DS_Store
+
+# project
+/meta
