@@ -21,9 +21,10 @@ var c = myFunc(2, 4); // assign to a new variable
 
 ### Function expression
 
-Functions can be assigned to variables and returned by other functions.
+Functions can be assigned to variables (function expression) and also returned by other functions.
 
 ```js
+// 1-functions/01-expression.js
 var fn = function foo() {
   return 2;
 };
@@ -33,7 +34,7 @@ var fn2 = function getFn() {
   return fn;
 }
 
-fn2()() // => 2
+console.log(fn2()()) // => 2
 ```
 
 Of course function can call other functions, including themselves.
@@ -44,10 +45,15 @@ So far we have only seen **named functions**. But a function can be defined with
 
 ```js
 var fn = function() {}; // function expression
+```
 
+```js
+// 1-examples-functions/02-iife.js
 (function() {
-  var privateValue = 'private';
+  var privateVar = 'private';
+  console.log(typeof privateVar); // => string
 })();
+console.log(typeof privateVar); // => undefined
 ```
 
 The second function is an example of an *IIFE*, an *immediately invoked function expression*. It is used for encapsulation and has to do with function scope.
@@ -59,27 +65,29 @@ Functions have a **local execution context** aka scope.
 Variables declared in a function are local to the function.
 
 ```js
+// 1-examples-functions/03-scope-1.js
 var word = 'bar';
 
 function speak() {
   var word = 'baz';
   return word;
 }
-speak() // eval => 'baz'
-word // eval => 'bar'
+console.log(speak()) // => 'baz'
+console.log(word) // => 'bar'
 ```
 
 Function arguments (the value of function params) are implicit var declarations.
 
 ```js
+// 1-examples-functions/03-scope-2.js
 var word = 'bar';
 
 function speak(word) { // implicit local `var word = bar`
   word = 'baz'; // overwrite local `word`
   return word;
 }
-speak(word) // => 'baz'
-eval(word) // => 'bar'
+console.log(speak()) // => 'baz'
+console.log(word) // => 'bar'
 ```
 
 ### Hoisting
@@ -87,6 +95,7 @@ eval(word) // => 'bar'
 It's important to note that variable declarations are *hoisted*, meaning they are always executed first.
 
 ```js
+// 1-examples-functions/04-hoisting.js
 var myvar = 'global variable';
 
 function func() {
@@ -118,6 +127,7 @@ In JavaScript functions can be nested, meaning functions can be defined inside o
 Variables that are declared in an outer function and used in an inner function are inherited and non-local to the inner function.
 
 ```js
+// 1-examples-functions/05-nested.js
 function initPost() {
     var score = 42;
 
@@ -136,6 +146,7 @@ initPost();
 Functions can be passed to other functions as parameters.
 
 ```js
+// 1-examples-functions/06-callback.js
 function myFunc(a, b, fn) {
     fn(a + b);
 }
