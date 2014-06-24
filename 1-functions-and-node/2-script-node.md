@@ -1,8 +1,6 @@
 Node.js
 =======
 
-Todo: Links + Examples
-
 ## Web Server
 
 A **web server** is a specialized software **program** that
@@ -39,11 +37,10 @@ A classic web server is blocked from further processing while it waits for repon
 Node.js is based on the idea that a web server can be just a library, basically a function that is invoked each time a request is received. As it turned out JavaScript is ideal for this, because of its support of anonymous functions and closures.
 
 ```js
-var http = require('http');
-http.createServer(function (req, res) {
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Hello World');
-}).listen(80);
+// 2-examples-node/01-server-1.js
+require('http').createServer(function (req, res) {
+	res.end('Hello World!');
+}).listen(3000);
 ```
 
 This example is very simple web server written in Node.js.
@@ -88,39 +85,49 @@ function onClick(event) {
 
 This DOM example shows a function that is only **invoked** when the user clicks a button. The click is a form of *input* that triggers an **event**. The `onClick` function is immediately registered as an *event handler*, but only executed **asynchronously**. An event handler is a form of a callback.
 
-Here's an example in Node.js
-
-```js
-http.createServer(onRequest);
-
-function onRequest(request, response) {
-  response.writeHead(200);
-  response.end('Hello World!');
-}
-```
-
-Again `onRequest` is a callback that is only invoked once a request is received.
-
 The same can be written using anonymous callbacks.
 
 ```js
 $('button').on('click', function(ev) {
-  // callback function, only called WHEN there is an event
+	// callback function, only called WHEN there is an event
 });
 ```
 
 Here's Node.js again.
 
 ```js
+// 2-examples-node/01-server-1b.js
+var http = require('http');
 http.createServer(function(req, res) {
-  res.writeHead(200);
-  res.end('Hello World!');
-});
+	res.writeHead(200);
+	res.end('Hello World!');
+}).listen(3000);
 ```
 
-Writing many sequential async tasks using only a pattern of inline anonymous callbacks can quickly lead to problems ("callback hell"). It's a good idea to work with named functions, that are kept small.
+Writing many sequential async tasks using only a pattern of inline anonymous callbacks can quickly lead to problems ("Callback Hell"). It's a good idea to work with named functions, that are kept small.
 
-There are additional approaches to solving problems with async programming.
+There are additional approaches to solving problems with async programming including usage of async helper libraries like Async.js and Q (Promises).
+
+Here's the http server written with a more descriptive syntax, without an inline callback.
+
+```js
+// 2-examples-node/01-server-2.js
+var http = require('http');
+var server = http.createServer();
+
+var onRequest = function handleRequest(req,res) {
+  res.writeHead(200);
+  res.end('Hello World!');
+};
+
+server
+	.listen(3000)
+	.on('request', onRequest)
+;
+```
+
+Again `onRequest` is a callback that is only invoked once a request is received.
+
 
 ## Modules
 
@@ -146,17 +153,21 @@ var myModule = require('moduleName');
 
 ```js
 // In the module posts.js
-module.exports = function(app) {
+module.exports = function(config) {
 	return {
-		get: function(id) {}
+		get: function(id) {
+			return config.postName + ' ' + id;
+		}
 	}
 };
 ```
 
 ```js
-// Requiring custom module posts.js
-var posts = require('./posts')(app);
-posts.get('42');
+// 2-examples-node/02-modules.js
+var config = { postName: 'Post' };
+// Requiring custom module posts.js in the current directory
+var posts = require('./posts')(config);
+console.log(posts.get('42'));
 ```
 
 With this system it is possible to create, publish and install modules with ease.
@@ -169,6 +180,7 @@ Node has a rich API suitable for server-side programming.
 Here is a typical example of Node.js coding using the async file system function `readFile`.
 
 ```js
+// 2-examples-node/03-api.js
 var fs = require('fs');
 
 fs.readFile(path, function(err, content) {
@@ -197,3 +209,5 @@ Like most async functions in Node `readFile` also has a synchronous variant `rea
   - http://browsenpm.org/help
 - Node Coding Tutorials
   - http://nodeschool.io/
+- Node: Up and Running (online book)
+- http://chimera.labs.oreilly.com/books/1234000001808/index.html
