@@ -3,7 +3,7 @@ var server = http.createServer();
 
 var onRequest = function handleRequest(req,res) {
 	res.writeHead(200, { 'Content-Type': 'text/plain' });
-	res.end('You requested ', + req.url);
+	res.end('You requested '+ req.url);
 };
 
 server
