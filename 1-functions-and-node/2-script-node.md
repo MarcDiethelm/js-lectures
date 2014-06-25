@@ -100,7 +100,7 @@ Here's Node.js again.
 var http = require('http');
 http.createServer(function(req, res) {
 	res.writeHead(200);
-	res.end('You requested ', + req.url);
+	res.end('You requested ' + req.url);
 }).listen(3000);
 ```
 
@@ -117,7 +117,7 @@ var server = http.createServer();
 
 var onRequest = function handleRequest(req,res) {
 	res.writeHead(200);
-	res.end('You requested ', + req.url);
+	res.end('You requested '+ req.url);
 };
 
 server
@@ -152,7 +152,7 @@ var myModule = require('moduleName');
 `myExportedObject` can be any JS object. It often is a function so we can pass arguments into the object, when initializing it.
 
 ```js
-// In the module routes.js
+// In the module post.js
 module.exports = function(config) {
 	return {
 		get: function(id) {

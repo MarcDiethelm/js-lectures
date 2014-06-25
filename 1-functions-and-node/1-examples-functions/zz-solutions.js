@@ -12,7 +12,7 @@ function solution1a() {
 	console.log(count);
 	if (count !== 50) {
 		count = count + 1;
-		solution1a()
+		solution1a();
 	}
 }
 
