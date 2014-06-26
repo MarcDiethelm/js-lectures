@@ -5,7 +5,7 @@ function initPost() {
 		score++;
 	}
 	upvote();
-	console.log(score) // => 48
+	console.log(score) // => 43
 
 }
 initPost();
