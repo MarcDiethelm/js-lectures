@@ -200,9 +200,9 @@ Some of Node's async conventions are visible in this example:
 
 Like most async functions in Node `readFile` also has a synchronous variant `readFileSync` which blocks further execution until it either returns the file content or throws an exception.
 
-**Exercise 2**: Write a module that you can pass a filename. Use the filename to create a file with fs.writeFile, then read it, then delete it. solution: 2-examples-node/solution-2/index.js
+**Exercise 2**: Write a module that you can pass a filename. Use the filename to create a file with fs.writeFile, then read it, then delete it. Use the [API reference](http://nodejs.org/api/). solution: 2-examples-node/solution-2/index.js
 
-**Exercise 3:** Write a server that handles two URIs differently. The following functionality should be in a module: /numbers makes the server write numbers to the console, /file makes the server create a file with fs.writeFile, then read it, then delete it.  solution: 2-examples-node/solution-3/index.js
+**Exercise 3:** Write a server that handles two URIs differently. The following functionality should be in a module: `/numbers` makes the server write numbers to the console, `/file` makes the server create a file with `fs.writeFile`, then read it, then delete it. Ideally send the responses from the module. Bonus: Send the file content to the browser for `/file`.  solution: 2-examples-node/solution-3/index.js
 
 
 ## Links
