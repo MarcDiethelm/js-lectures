@@ -94,7 +94,7 @@ Routing means performing different actions depending on the request URI. Express
 The recommended syntax for defining a route is this:
 
 ```js
-app.routes('/products')
+app.route('/products')
 	.all(function(req, res, next) {
 		// something to do for all HTTP verbs
 	})
@@ -134,7 +134,7 @@ Not just the routes can be externalized, but also the callbacks themselves. It's
 // routes.js
 var products = require('./controllers/products');
 module.exports = function(app) {
-	app.routes('/products/:id')
+	app.route('/products/:id')
 		.get(products.getOne)
 		.post(products.createOne)
 	;
@@ -225,7 +225,7 @@ var cookieOptions = {
    ,maxAge	: 7 * 24 * 3600 * 1000   // a week for example
 };
 app.use(express.cookieParser()); // installed dependency
-app.use(setSession);
+app.use(getSession);
 
 // Set up some routes
 // [...]
@@ -235,6 +235,7 @@ function getSession(req, res, next) {
 	if (!req.cookies.sessionId) return next();
 
 	sessionModel.findById(req.cookies.sessionId, function(err, session) {
+		req.session = session;
 		return next();
 	});
 }
@@ -336,7 +337,7 @@ var app = express();
 app.set('view engine', 'hbs'); // use hbs's render function for .hbs files
 app.set('views', 'path/to/views');
 
-app.routes('/')
+app.route('/')
 	.all(function(req, res, next) {
 		res.locals.layout = 'default';
 		next();
