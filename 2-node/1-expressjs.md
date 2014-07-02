@@ -111,7 +111,7 @@ You can specify url fragments that you want to have easy access to. Here's an ex
 
 ```js
 app.get('products/:id/image', function(req, res, next) {
-	var prodId = req.params.img;
+	var prodId = req.params.id;
 });
 ```
 
@@ -129,13 +129,13 @@ Usually the route definitions are externalized in a custom module.
 
 Not just the routes can be externalized, but also the callbacks themselves. It's good practice to bundle them in a module as function properties of an object (methods). That module is then effectively a controller for a certain route.
 
-<example>
+
 ```js
 // routes.js
 var products = require('./controllers/products');
 module.exports = function(app) {
 	app.routes('/products/:id')
-		.get(products.get)
+		.get(products.getOne)
 		.post(products.createOne)
 	;
 };
@@ -224,7 +224,7 @@ var cookieOptions = {
    ,httpOnly: true
    ,maxAge	: 7 * 24 * 3600 * 1000   // a week for example
 };
-app.use(express.cookieParser()); //
+app.use(express.cookieParser()); // installed dependency
 app.use(setSession);
 
 // Set up some routes
@@ -234,16 +234,16 @@ app.use(setSession);
 function getSession(req, res, next) {
 	if (!req.cookies.sessionId) return next();
 
-	sessionModel.findById('req.cookies.sessionId', function(err, session) {
+	sessionModel.findById(req.cookies.sessionId, function(err, session) {
 		return next();
 	});
 }
 
 // setSession middleware
 function setSession(req, res, next) {
-	sessionModel.set(session, function(err, session) {
+	sessionModel.set(req, function(err, session) {
 		if (!req.cookies.sessionId) {
-			res.cookie(sessionId, session._id, cookieOptions);
+			res.cookie('sessionId', session._id, cookieOptions);
 		}
 		return next();
 	});
@@ -255,13 +255,11 @@ function setSession(req, res, next) {
 The `set` method could look like this:
 
 ```js
-function set(session, req, callback) {
+function set(req, callback) {
 	var session = req.session || {};
 	session.lastVisit = new Date;
 	session.ip = req.ip;
-	db.insert(session, function (err, session) {
-		callback(err, session);
-	});
+	db.insert(session, callback);
 }
 ```
 
