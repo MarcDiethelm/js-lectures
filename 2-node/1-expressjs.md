@@ -74,7 +74,18 @@ app.use(function(req, res, next) {
 });
 ```
 
-Until version 4 Express came bundled with Connect which provided many 'standard' middlewares by default. These middlewares must now be installed separately.
+### Error handling
+
+Until version 4 Express came bundled with Connect which provided many 'standard' middlewares by default. These middlewares must now be [installed separately](https://github.com/senchalabs/connect#middleware).
+
+A middleware that takes 4 arguments is an [error handler](http://expressjs.com/guide.html#error-handling). As expected the error is the first argument. Like other middlewares the error handlers are called in the order they were added.
+
+```js
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.send(500, 'Something broke!');
+});
+```
 
 ## Routes
 
@@ -256,7 +267,20 @@ function set(session, req, callback) {
 
 **Note:** A real-world model for a NoSQL DB will often enforce datatypes according to a predefined *[schema](http://mongoosejs.com/docs/guide.html)* and more importantly escape any special JS characters like `' " \ ; { }` before insertion. This prevents [injection attacks](https://www.owasp.org/index.php/Testing_for_NoSQL_injection).
 
-**Exercise:** Create an Express application with a *homepage* and a *subpage*. Just `res.write` the page content. Greet the user with her  his IP address and the time and date of her last pageload. You can use `date.toUTCString()`. Solution: to do
+**Exercise:** Create an Express application with a *homepage* and a *subpage*. Just `res.write` the page content. Greet the user with her IP address and the time and date of her last pageload. You can use `date.toUTCString()`. Use this file structure:
+
+```
+controllers
+  --default.js
+models
+  --session.js
+views
+  --home.hbs
+  --subpage.hbs
+server.js
+routes.js
+```
+Solution: to do
 
 Of course [there are modules](https://github.com/expressjs/session) that provide most of this functionality in a safe way and a lot more. But it's important to understand the basic concepts.
 
@@ -276,10 +300,12 @@ Let's take a look at a simple view template written in [Handlebars](http://handl
 	<select>
 	{{#each characters}}
 		<option value="{{@index}}">{{this.rank}} {{this.name}}</option>
-	{{/}}
+	{{/each}}
 	</select>
 </body>
 ```
+
+Note the variables and control structures in the curly braces or "handlebars". The output in double braces is automatically HTML-escaped. To get non-escaped output use triple braces.
 
 This template would be rendered with data like this.
 
@@ -304,16 +330,32 @@ Express.js let's render views quite simply inside a controller by wrapping the t
 But first we must tell Express what to do:
 
 ```js
-var hbs = require('hbs');
+// 2-examples-view/server.js
+var hbs = require('hbs'); // hbs is a Node wrapper for Handlebars.js
 var express = require('express')
 var app = express();
 
 app.set('view engine', 'hbs'); // use hbs's render function for .hbs files
 app.set('views', 'path/to/views');
 
-app.get('/', function(req, res, next) {
-	res.render('home', { // render path/to/views/home.hbs
-		// context
+app.routes('/')
+	.all(function(req, res, next) {
+		res.locals.layout = 'default';
+		next();
+	})
+	.get(function(req, res, next) {
+		res.render('home',  // render file path/to/views/home.hbs
+		{
+			// context
+		});
 	});
-});
 ```
+
+Since the basic HTML document rarely changes, there exists in hbs the concept of a *layout*: A base document that the view is rendered in.
+
+To use a layout we add a `layout` property to the context, which specifies the file to use. Inside the layout the view is rendered in place of the variable `{{{body}}}`.
+
+To set a context for all templates we can use `app.locals` or to set the context for a request we can use `res.locals`.
+
+- exercise / homework: put it all together
+- homework: use contrib middlewares
