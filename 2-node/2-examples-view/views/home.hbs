@@ -1,0 +1,7 @@
+<h1>{{title}}</h1>
+
+<select>
+{{#each characters}}
+	<option value="{{@index}}">{{this.rank}} {{this.name}}</option>
+{{/each}}
+</select>
