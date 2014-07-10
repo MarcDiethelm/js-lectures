@@ -89,7 +89,7 @@ console.log(individual.fingers, individual.gender); // => 10 female
 console.log(individual.hasOwnProperty('fingers')); // => false
 ```
 
-In this example `individual` inherits the `fingers` property from its `person` prototype. And because `person` was created using an object literal as its prototype we also inherited the `hasOwnProperty` method, which we saw before. `hasOwnProperty` of course proves that `taste` is a property defined further up in the prototype chain.
+In this example `individual` inherits the `fingers` property from its `person` prototype. And because `person` was created using an object literal as its prototype we also inherited the `hasOwnProperty` method, which we saw before. `hasOwnProperty` of course proves that `fingers` is a property defined further up in the prototype chain.
 
 
 ### Dynamic inheritance

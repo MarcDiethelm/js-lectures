@@ -28,15 +28,19 @@ var getPost;
 	var cache = {};
 
 	getPost = function(id) {
-		if (!cache[id]) { // Get the post from a backend. Not shown here.
-			cache[id] = 'This is Post #' + id;
+		if (!cache[id]) {
+			// Get the post from a backend. Not shown here.
+			return cache[id] = 'This is Post #' + id;
 		}
-		return cache[id] + ' (cached)';
+		else {
+			return cache[id] + ' (cached)';
+		}
 	};
 })();
 
-console.log(getPost(42)); // => This is Post #42
-console.log(getPost(42)); // => This is Post #42 (cached)
+// calling getPost in the global context
+console.log(getPost(42));
+console.log(getPost(42));
 ```
 
 In the next example we need to call `speak` via the global `setTimeout` function. However we then have no way of directly passing values to it.
