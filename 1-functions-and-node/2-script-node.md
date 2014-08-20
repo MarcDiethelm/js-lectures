@@ -1,5 +1,5 @@
-Node.js Basics
-==============
+Node.js
+=======
 
 ## Web Server
 
@@ -24,7 +24,7 @@ A classic web server consists of the server program to serve static files and se
 
 The first implementation of SSS was in JavaScript running on top of Netscape's Java-based Enterprise Server, which has since vanished. More modern examples are Perl CGI, JSP, PHP, ASP, etc.
 
-Historically there have been a few attempts to bring back server-side JavaScript. Obviously it seems more efficient to use the same language in the browser and the server. Those attempts all followed the classical model and none of them were successful.
+Historically there have been a few attempts to bring back server-side JavaScript. Obvioulsy it seems more efficient to use the same language in the browser and the server. Those attempts all followed the classical model and none of them were successful.
 
 This has led to a division between frontend and server-side programming. Consequently as the requirements of frontend engineering have progressed, satisfying those requirements on the server has become more and more difficult. For example providing real-time upload data to a browser to build a client-side upload progress bar had become a really difficult problem.
 
@@ -100,7 +100,7 @@ Here's Node.js again.
 var http = require('http');
 http.createServer(function(req, res) {
 	res.writeHead(200);
-	res.end('You requested ', + req.url);
+	res.end('Hello World!');
 }).listen(3000);
 ```
 
@@ -116,8 +116,8 @@ var http = require('http');
 var server = http.createServer();
 
 var onRequest = function handleRequest(req,res) {
-	res.writeHead(200);
-	res.end('You requested ', + req.url);
+  res.writeHead(200);
+  res.end('Hello World!');
 };
 
 server
@@ -152,7 +152,7 @@ var myModule = require('moduleName');
 `myExportedObject` can be any JS object. It often is a function so we can pass arguments into the object, when initializing it.
 
 ```js
-// In the module routes.js
+// In the module posts.js
 module.exports = function(config) {
 	return {
 		get: function(id) {
@@ -171,8 +171,6 @@ console.log(posts.get('42'));
 ```
 
 With this system it is possible to create, publish and install modules with ease.
-
-**Exercise 1:** Write a module that logs integer numbers to the console. The start and ending number is passed into the module when requiring it. solution: 2-examples-node/solution-1/index.js
 
 
 ## API and error handling
@@ -200,10 +198,6 @@ Some of Node's async conventions are visible in this example:
 
 Like most async functions in Node `readFile` also has a synchronous variant `readFileSync` which blocks further execution until it either returns the file content or throws an exception.
 
-**Exercise 2**: Write a module that you can pass a filename. Use the filename to create a file with fs.writeFile, then read it, then delete it. solution: 2-examples-node/solution-2/index.js
-
-**Exercise 3:** Write a server that handles two URIs differently. The following functionality should be in a module: /numbers makes the server write numbers to the console, /file makes the server create a file with fs.writeFile, then read it, then delete it.  solution: 2-examples-node/solution-3/index.js
-
 
 ## Links
 
@@ -216,4 +210,4 @@ Like most async functions in Node `readFile` also has a synchronous variant `rea
 - Node Coding Tutorials
   - http://nodeschool.io/
 - Node: Up and Running (online book)
-	- http://chimera.labs.oreilly.com/books/1234000001808/index.html
+- http://chimera.labs.oreilly.com/books/1234000001808/index.html
