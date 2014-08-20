@@ -39,6 +39,7 @@ console.log(fn2()()) // => 2
 
 Of course function can call other functions, including themselves.
 
+
 ### Anonymous functions
 
 So far we have only seen **named functions**. But a function can be defined without naming it.
@@ -89,6 +90,9 @@ function speak(word) { // implicit local `var word = bar`
 console.log(speak()) // => 'baz'
 console.log(word) // => 'bar'
 ```
+
+**Exercise:** Write a program that logs all integer numbers from 0 to 50 using only functions without using an array or a loop (`for`, `while`).
+
 
 ### Hoisting
 
@@ -154,7 +158,7 @@ function myFunc(a, b, fn) {
 myFunc(2, 4, console.log);
 ```
 
-This should be familiar from typical jQuery examples.
+This use of a callback should be familiar from typical jQuery examples.
 
 ```js
 $('button').on('click', function(ev) {
