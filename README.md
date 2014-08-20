@@ -10,6 +10,13 @@ These lectures and exercises are a Git repository. This means you can clone, imp
 
 And of course you can run all the JavaScript code locally with [Node](http://nodejs.org/).
 
+Lessons
+
+- JS Functions revisited
+- Node Basics
+- JS Objects, prototypes and OOP
+- JSON and Ajax
+
 
 Have fun!
 
