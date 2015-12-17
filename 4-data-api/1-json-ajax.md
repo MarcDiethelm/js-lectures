@@ -86,8 +86,8 @@ Here is a very simple example of 'classic' XHR for modern browsers (IE7+).
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
 	if (4 === xhr.readyState) {
-		if (httpRequest.status === 200) {
-			alert(httpRequest.responseText);
+		if (xhr.status === 200) {
+			alert(xhr.responseText);
 		} else {
 			alert('There was a problem with the request.');
 		}
