@@ -42,6 +42,7 @@ var Person = function Person(data) {
 
 Person.prototype = {
 	mood: 'neutral',
+
 	socialize: function() {
 		this.mood = 'happy';
 	}
@@ -58,7 +59,7 @@ Person.prototype.cyborgify = function() {
 
 Person.isHuman = true;
 
-var marc = new Person('Marc', 'Diethelm');
+var marc = new Person({ firstName: 'Marc', lastName: 'Diethelm' });
 
 //////////////////////////////////////////
 
@@ -87,4 +88,3 @@ var marc = new Person('Marc', 'Diethelm');
  * this.legs
  * =============================================
  */
-marc
